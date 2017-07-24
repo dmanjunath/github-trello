@@ -24,7 +24,10 @@ router.post('/', function(req, res) {
         trelloCardId = trelloCardId[0].replace(/{/gi, '').replace(/}/gi, '');
       }
       console.log('trelloCardId', trelloCardId);
-      request.post({url: `https://api.trello.com/1/cards/${trelloCardId}/attachments?key=${KEY}&token=${TOKEN}`, body: {url: commit.url}});
+      request.post({url: `https://api.trello.com/1/cards/${trelloCardId}/attachments?key=${KEY}&token=${TOKEN}&url=${commit.url}`}, function(err){
+        if(err) console.error("error sending to trello", err);
+        else console.log("added to trello!");
+      });
     });
   }
   res.status(200).send();
